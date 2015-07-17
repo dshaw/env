@@ -1,7 +1,8 @@
 var Env = require('..')
-  , env = require('..')('./fixtures/env.json')
-  , tap = require('tap')
-  , test = tap.test
+  , Path = require('path')
+  , env_json = Path.resolve(__dirname + '/fixtures/env.json')
+  , env = require('..')(env_json)
+  , test = require('tape')
 
 test('env core', function (t) {
   t.ok(Env.version)
@@ -10,7 +11,7 @@ test('env core', function (t) {
   t.ok(env.set)
   t.ok(env.del)
 
-  t.equal(env.evars, require('./fixtures/env.json'))
+  t.equal(env.evars, require(env_json))
 
   t.end()
 })
@@ -76,7 +77,7 @@ test('env get all', function (t) {
 
 test('env id', function (t) {
   env.set('ENV_ID', '1')
-  var env2 = require('..')('./fixtures/env.json')
+  var env2 = require('..')(env_json)
   t.equal(env2.id, '1')
 
   t.end()
@@ -85,9 +86,8 @@ test('env id', function (t) {
 test('env with no env.json', function (t) {
   var env3 = require('..')()
   t.ok(env3.evars)
-  t.isa(env3.evars, 'object')
+  t.ok(typeof env3.evars  === 'object', 'env is an object');
   t.deepEqual(env3.evars, {})
   t.deepEqual(env3.get(), {})
-
   t.end()
 })
