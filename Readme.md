@@ -12,7 +12,7 @@ Env is an evolving project based which came out of discussions with [@joemccann]
 ### Get Env.
 
 ```bash
-npm install env
+npm install env --save
 ```
 
 ### Usage
